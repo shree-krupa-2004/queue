@@ -27,7 +27,7 @@ try:
             f"weather_{weather}": 1
         }
 
-        # All required columns
+        # All required columns in the correct order
         all_cols = [
             "queue_length", "avg_service_time", "hour",
             "day_of_week_Monday", "day_of_week_Tuesday", "day_of_week_Wednesday",
@@ -40,8 +40,8 @@ try:
             if col not in input_data:
                 input_data[col] = 0
 
-        # Convert to DataFrame
-        X_input = pd.DataFrame([input_data])
+        # Create DataFrame with columns in the correct order
+        X_input = pd.DataFrame([[input_data[col] for col in all_cols]], columns=all_cols)
 
         # Predict
         prediction = model.predict(X_input)[0]
