@@ -30,9 +30,9 @@ try:
         # All required columns in the correct order
         all_cols = [
             "queue_length", "avg_service_time", "hour",
-            "day_of_week_Monday", "day_of_week_Tuesday", "day_of_week_Wednesday",
-            "day_of_week_Thursday", "day_of_week_Friday", "day_of_week_Saturday", "day_of_week_Sunday",
-            "weather_Sunny", "weather_Rainy", "weather_Cloudy"
+            "day_of_week_Friday", "day_of_week_Monday", "day_of_week_Saturday",
+            "day_of_week_Sunday", "day_of_week_Thursday", "day_of_week_Tuesday",
+            "day_of_week_Wednesday", "weather_Cloudy", "weather_Rainy", "weather_Sunny"
         ]
 
         # Fill missing cols with 0
