@@ -18,14 +18,23 @@ try:
         weather = st.selectbox("Weather", ["Sunny", "Rainy", "Cloudy"])
         avg_time = st.number_input("Avg Service Time per Person (min)", min_value=1, max_value=10, value=5)
 
-        # Create input dict
+        # Create input dict with base features
         input_data = {
             "queue_length": queue_length,
             "avg_service_time": avg_time,
             "hour": hour,
-            f"day_of_week_{day}": 1,
-            f"weather_{weather}": 1
         }
+
+        # Add all day_of_week columns, set to 0
+        for day_col in [
+            "day_of_week_Friday", "day_of_week_Monday", "day_of_week_Saturday",
+            "day_of_week_Sunday", "day_of_week_Thursday", "day_of_week_Tuesday", "day_of_week_Wednesday"
+        ]:
+            input_data[day_col] = 1 if f"day_of_week_{day}" == day_col else 0
+
+        # Add all weather columns, set to 0
+        for weather_col in ["weather_Cloudy", "weather_Rainy", "weather_Sunny"]:
+            input_data[weather_col] = 1 if f"weather_{weather}" == weather_col else 0
 
         # All required columns in the correct order
         all_cols = [
@@ -34,11 +43,6 @@ try:
             "day_of_week_Sunday", "day_of_week_Thursday", "day_of_week_Tuesday",
             "day_of_week_Wednesday", "weather_Cloudy", "weather_Rainy", "weather_Sunny"
         ]
-
-        # Fill missing cols with 0
-        for col in all_cols:
-            if col not in input_data:
-                input_data[col] = 0
 
         # Create DataFrame with columns in the correct order
         X_input = pd.DataFrame([[input_data[col] for col in all_cols]], columns=all_cols)
