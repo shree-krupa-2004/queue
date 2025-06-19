@@ -2,6 +2,7 @@ import streamlit as st
 import joblib
 import pandas as pd
 import os
+import matplotlib.pyplot as plt
 
 st.title("🕒 Smart Queue Wait Time Predictor")
 
@@ -51,5 +52,17 @@ try:
         prediction = model.predict(X_input)[0]
 
         st.success(f"⏳ Estimated Wait Time: **{prediction:.1f} minutes**")
+
+        # Load the dataset for visualization
+        df = pd.read_csv("simulated_queue_data_2000.csv")
+
+        # Calculate average wait time by day
+        avg_wait_by_day = df.groupby("day_of_week")["actual_wait_time"].mean().reindex(
+            ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+        )
+
+        # Plot using Streamlit
+        st.subheader("📊 Average Wait Time by Day of the Week")
+        st.bar_chart(avg_wait_by_day)
 except Exception as e:
     st.error(f"An error occurred: {e}")
